@@ -101,19 +101,31 @@ Jupyter Notebook
 GitHub
 
 ⚙️ Installation and Setup
+
 1️⃣ Clone the Repository
+
 git clone https://github.com/srirammulukuntla11/SCT_ML_01.git
+
 cd SCT_ML_01
+
 2️⃣ Install Dependencies
+
 pip install -r requirements.txt
+
 
 If the requirements file is empty install manually:
 
+
 pip install streamlit pandas scikit-learn numpy
+
 3️⃣ Run the Application
+
 streamlit run app.py
+
 4️⃣ Open in Browser
+
 http://localhost:8501
+
 ✨ Features
 
 Machine Learning based price prediction
