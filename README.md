@@ -103,6 +103,7 @@ Jupyter Notebook
 GitHub
 
 <img width="632" height="391" alt="Image" src="https://github.com/user-attachments/assets/a0ce13e8-3c36-4be8-9520-95fb27f518f5" />
+
 ⚙️ Installation and Setup
 1️⃣ Clone the Repository
 git clone https://github.com/srirammulukuntla11/SCT_ML_01.git
