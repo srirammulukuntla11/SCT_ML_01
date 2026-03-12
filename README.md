@@ -1,7 +1,6 @@
 🏠 House Price Prediction System
 
-An End-to-End Machine Learning Web Application that predicts house prices based on various property features.
-The project uses machine learning regression models trained on housing data and provides real-time predictions through a Streamlit web interface.
+An End-to-End Machine Learning Web Application that predicts house prices based on various property features. The project uses machine learning regression models trained on housing data and provides real-time predictions through a Streamlit web interface.
 
 🚀 Project Overview
 
@@ -44,7 +43,6 @@ test.csv → used for testing predictions
 The machine learning model is trained using Scikit-Learn regression algorithms.
 
 Steps in Model Development
-
 Data Preprocessing
 
 Handling missing values
@@ -102,32 +100,20 @@ Jupyter Notebook
 
 GitHub
 
-<img width="632" height="391" alt="Image" src="https://github.com/user-attachments/assets/a0ce13e8-3c36-4be8-9520-95fb27f518f5" />
-
 ⚙️ Installation and Setup
-
 1️⃣ Clone the Repository
 git clone https://github.com/srirammulukuntla11/SCT_ML_01.git
-
 cd SCT_ML_01
-
 2️⃣ Install Dependencies
-
 pip install -r requirements.txt
 
-
-If requirements file is empty install manually:
+If the requirements file is empty install manually:
 
 pip install streamlit pandas scikit-learn numpy
-
 3️⃣ Run the Application
-
 streamlit run app.py
-
 4️⃣ Open in Browser
-
 http://localhost:8501
-
 ✨ Features
 
 Machine Learning based price prediction
