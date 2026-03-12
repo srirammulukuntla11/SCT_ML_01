@@ -1,0 +1,117 @@
+/* Custom Styles for House Price Predictor */
+
+:root {
+    --primary: #3498db;
+    --secondary: #2ecc71;
+    --dark: #2c3e50;
+    --light: #ecf0f1;
+    --text: #34495e;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+}
+
+/* Navbar */
+.navbar {
+    background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+}
+
+/* Cards */
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Form Elements */
+.form-control {
+    padding: 15px;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.input-group-text {
+    background: white;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border: none;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(52, 152, 219, 0.4);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary);
+    color: var(--primary);
+    font-weight: 500;
+}
+
+.btn-outline-primary:hover {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-color: transparent;
+    color: white;
+}
+
+/* Footer */
+footer {
+    background: white !important;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.05);
+}
+
+/* Headings */
+.display-4 {
+    background: linear-gradient(135deg, var(--dark), var(--primary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.lead {
+    color: var(--text) !important;
+    font-weight: 400;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 15px;
+    border: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 2rem;
+    }
+    
+    .lead {
+        font-size: 1rem;
+    }
+}

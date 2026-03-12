@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Home - House Price Predictor{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Header with better visibility -->
+            <div class="text-center mb-5">
+                <h1 class="display-4 fw-bold" style="color: #2c3e50;">
+                    <i class="fas fa-home" style="color: #3498db;"></i> 
+                    Indian House Price Predictor
+                </h1>
+                <p class="lead" style="color: #34495e; font-size: 1.25rem;">
+                    Enter your property details to get an estimated market price
+                </p>
+                <div style="width: 100px; height: 4px; background: linear-gradient(90deg, #3498db, #2ecc71); margin: 20px auto;"></div>
+            </div>
+
+            <!-- Error Message -->
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fas fa-exclamation-circle"></i> {{ error }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+            {% endif %}
+
+            <!-- Model Warning -->
+            {% if not model_loaded %}
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <strong>Model not loaded.</strong> Please run <code>python model/train_model.py</code>
+            </div>
+            {% endif %}
+
+            <!-- Prediction Form -->
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-body p-5">
+                    <form action="/predict" method="POST" id="predictionForm">
+                        <!-- Bedrooms -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold fs-5">
+                                <i class="fas fa-bed text-primary me-2"></i>Number of Bedrooms
+                            </label>
+                            <input type="number" class="form-control form-control-lg rounded-3 border-2" 
+                                   name="bedrooms" id="bedrooms" 
+                                   min="1" max="10" step="1" value="3" required
+                                   style="border-color: #e0e0e0;">
+                            <div class="form-text mt-2">
+                                <i class="fas fa-info-circle text-info me-1"></i>
+                                Typical range: 1-10 bedrooms
+                            </div>
+                        </div>
+
+                        <!-- Bathrooms -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold fs-5">
+                                <i class="fas fa-bath text-primary me-2"></i>Number of Bathrooms
+                            </label>
+                            <input type="number" class="form-control form-control-lg rounded-3 border-2" 
+                                   name="bathrooms" id="bathrooms" 
+                                   min="0.5" max="8" step="0.5" value="2" required
+                                   style="border-color: #e0e0e0;">
+                            <div class="form-text mt-2">
+                                <i class="fas fa-info-circle text-info me-1"></i>
+                                Half bathrooms count as 0.5
+                            </div>
+                        </div>
+
+                        <!-- Area -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold fs-5">
+                                <i class="fas fa-arrows-alt text-primary me-2"></i>Built-up Area
+                            </label>
+                            <div class="input-group">
+                                <input type="number" class="form-control form-control-lg rounded-3 border-2" 
+                                       name="area" id="area" 
+                                       min="300" max="50000" step="10" value="1200" required
+                                       style="border-color: #e0e0e0;">
+                                <span class="input-group-text bg-light border-2">sq.ft.</span>
+                            </div>
+                            <div class="form-text mt-2">
+                                <i class="fas fa-info-circle text-info me-1"></i>
+                                Range: 300 - 50,000 sq.ft.
+                            </div>
+                        </div>
+
+                        <!-- Quick Select Buttons -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold fs-5 mb-3">
+                                <i class="fas fa-bolt text-warning me-2"></i>Quick Select
+                            </label>
+                            <div class="d-flex gap-2 flex-wrap">
+                                <button type="button" class="btn btn-outline-primary px-4 py-2 quick-select" 
+                                        data-bedrooms="1" data-bathrooms="1" data-area="500">
+                                    <i class="fas fa-home me-1"></i>1 BHK
+                                </button>
+                                <button type="button" class="btn btn-outline-primary px-4 py-2 quick-select" 
+                                        data-bedrooms="2" data-bathrooms="1" data-area="800">
+                                    <i class="fas fa-home me-1"></i>2 BHK
+                                </button>
+                                <button type="button" class="btn btn-outline-primary px-4 py-2 quick-select" 
+                                        data-bedrooms="3" data-bathrooms="2" data-area="1200">
+                                    <i class="fas fa-home me-1"></i>3 BHK
+                                </button>
+                                <button type="button" class="btn btn-outline-primary px-4 py-2 quick-select" 
+                                        data-bedrooms="4" data-bathrooms="3" data-area="1800">
+                                    <i class="fas fa-home me-1"></i>4 BHK
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary btn-lg w-100 py-3 mt-3 rounded-3 fw-semibold" 
+                                {% if not model_loaded %}disabled{% endif %}
+                                style="background: linear-gradient(135deg, #3498db, #2ecc71); border: none;">
+                            <i class="fas fa-calculator me-2"></i> Predict Price
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Simple Info Badge (Removed workflow) -->
+            <div class="text-center mt-4">
+                <span class="badge bg-light text-dark p-3 rounded-pill">
+                    <i class="fas fa-database text-primary me-2"></i>
+                    Trained on Indian Housing Dataset
+                    <i class="fas fa-chart-line text-success ms-2"></i>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Quick select functionality
+document.querySelectorAll('.quick-select').forEach(button => {
+    button.addEventListener('click', function() {
+        document.getElementById('bedrooms').value = this.dataset.bedrooms;
+        document.getElementById('bathrooms').value = this.dataset.bathrooms;
+        document.getElementById('area').value = this.dataset.area;
+        
+        // Highlight selected
+        document.querySelectorAll('.quick-select').forEach(btn => {
+            btn.classList.remove('btn-primary', 'text-white');
+            btn.classList.add('btn-outline-primary');
+        });
+        this.classList.remove('btn-outline-primary');
+        this.classList.add('btn-primary', 'text-white');
+    });
+});
+
+// Form validation
+document.getElementById('predictionForm').addEventListener('submit', function(e) {
+    const bedrooms = document.getElementById('bedrooms').value;
+    const bathrooms = document.getElementById('bathrooms').value;
+    const area = document.getElementById('area').value;
+    
+    if (bedrooms < 1 || bedrooms > 10) {
+        e.preventDefault();
+        alert('Please enter bedrooms between 1 and 10');
+    }
+    else if (bathrooms < 0.5 || bathrooms > 8) {
+        e.preventDefault();
+        alert('Please enter bathrooms between 0.5 and 8');
+    }
+    else if (area < 300 || area > 50000) {
+        e.preventDefault();
+        alert('Please enter area between 300 and 50000 sq.ft.');
+    }
+});
+</script>
+{% endblock %}
