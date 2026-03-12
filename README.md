@@ -127,6 +127,7 @@ streamlit run app.py
 4️⃣ Open in Browser
 
 http://localhost:8501
+
 ✨ Features
 
 Machine Learning based price prediction
